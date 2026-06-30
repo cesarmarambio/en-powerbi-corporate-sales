@@ -1,0 +1,34 @@
+table dim_seller
+	lineageTag: 836f8927-0613-41bc-9cc7-7de177266c36
+
+	column seller_id
+		dataType: int64
+		formatString: 0
+		lineageTag: a7166ad7-c19b-4846-9e46-4fd99068bf5e
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column seller_name
+		dataType: string
+		lineageTag: 81ebee48-2ec0-4c65-b569-456bae041de4
+		summarizeBy: none
+		sourceColumn: seller_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_seller = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CSV_DIR & "dim_seller.csv"),[Delimiter=";", Columns=2, Encoding=1252]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"seller_id", Int64.Type}, {"seller_name", type text}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

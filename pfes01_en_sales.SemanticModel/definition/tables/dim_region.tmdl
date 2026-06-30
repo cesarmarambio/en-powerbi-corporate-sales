@@ -1,0 +1,51 @@
+table dim_region
+	lineageTag: 4e8927f1-30c6-4aa8-a739-5aa8af69da33
+
+	column region_id
+		dataType: string
+		lineageTag: 56b4b98d-03a4-41a8-aa63-8b1a94024212
+		summarizeBy: none
+		sourceColumn: region_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_sort
+		dataType: string
+		lineageTag: c856bf4e-4803-4a8e-95a7-04b321fba937
+		summarizeBy: none
+		sourceColumn: region_sort
+
+		annotation SummarizationSetBy = Automatic
+
+	column region_name
+		dataType: string
+		lineageTag: 1e28b948-2165-456a-8e17-35ee6a78ea84
+		summarizeBy: none
+		sourceColumn: region_name
+		sortByColumn: region_sort
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column short_name
+		dataType: string
+		lineageTag: 9168d7cd-b358-4a49-b2d1-0018dc32eb79
+		summarizeBy: none
+		sourceColumn: short_name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition dim_region = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CSV_DIR & "dim_region.csv"),[Delimiter=";", Columns=4, Encoding=1252]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true])
+				in
+				    #"Promoted Headers"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

@@ -1,0 +1,28 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	discourageImplicitMeasures
+	sourceQueryCulture: es-CL
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["dim_city","dim_client","dim_region","fact_sales","dim_seller","dim_product","CSV_DIR"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBI_ProTooling = ["CalcGroup","DevMode"]
+
+ref table dim_city
+ref table dim_client
+ref table dim_region
+ref table fact_sales
+ref table 'Calculation group'
+ref table DateTableTemplate_322c7948-c218-4b83-b269-428116f2153c
+ref table dim_seller
+ref table dim_product
+ref table Dim_Calendar
+ref table LocalDateTable_392fc7bc-d6ed-4d6f-b437-d8e8aee5d33c
+
+ref cultureInfo en-US
+

@@ -1,0 +1,29 @@
+relationship AutoDetected_f35b65dd-ad42-4b40-8313-7d9662ccfccb
+	fromColumn: dim_city.region_id
+	toColumn: dim_region.region_id
+
+relationship d8d7778c-bcc4-46f7-bbd1-a70513cc42ea
+	joinOnDateBehavior: datePartOnly
+	fromColumn: Dim_Calendar.Date
+	toColumn: LocalDateTable_392fc7bc-d6ed-4d6f-b437-d8e8aee5d33c.Date
+
+relationship AutoDetected_ea1698f6-e1e8-409f-98dc-90f4b42fb172
+	fromColumn: fact_sales.city_id
+	toColumn: dim_city.city_id
+
+relationship AutoDetected_0f709801-e7a7-42eb-bc41-fabacee45015
+	fromColumn: fact_sales.product_id
+	toColumn: dim_product.product_id
+
+relationship 2c7c0d75-754b-838b-a030-e86c0da776ce
+	fromColumn: fact_sales.date
+	toColumn: Dim_Calendar.Date
+
+relationship c1c15b59-e2d3-a678-3832-4c34ea404369
+	fromColumn: fact_sales.seller_id
+	toColumn: dim_seller.seller_id
+
+relationship d6574952-69f7-224e-84b6-fa452e76f44d
+	fromColumn: fact_sales.client_id
+	toColumn: dim_client.client_id
+

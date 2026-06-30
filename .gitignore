@@ -1,0 +1,12 @@
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+
+# Ignore Power BI local cache
+.pbi/
+
+# Ignore binary
+*.pbix
+
+# Ignore local data
+*.csv

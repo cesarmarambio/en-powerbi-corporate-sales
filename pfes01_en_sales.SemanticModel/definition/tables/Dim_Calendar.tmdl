@@ -1,0 +1,119 @@
+table Dim_Calendar
+	lineageTag: 73da3d6c-32e9-4667-8e91-38cab3644066
+
+	column Date
+		formatString: General Date
+		lineageTag: 29d5d4fa-0cc9-4698-8106-f9467c29ea72
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Date]
+
+		variation Variation
+			isDefault
+			relationship: d8d7778c-bcc4-46f7-bbd1-a70513cc42ea
+			defaultHierarchy: LocalDateTable_392fc7bc-d6ed-4d6f-b437-d8e8aee5d33c.'Date Hierarchy'
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		formatString: 0
+		lineageTag: 054c15ab-c607-4351-866d-627c2c6dd981
+		summarizeBy: count
+		isNameInferred
+		sourceColumn: [DateKey]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Year
+		formatString: 0
+		lineageTag: 1adbc868-bc37-4a0d-b3d0-a0e5ad305ec6
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Year]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Period
+		formatString: 0
+		lineageTag: 5f2c992e-d4cf-4e3f-b8af-6dc99f65df3d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Period]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthNo
+		formatString: 0
+		lineageTag: a271efcc-59f1-498c-ba83-dbde33c238cb
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [MonthNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthName
+		lineageTag: 07a63bea-c822-43a7-a8b9-1e2c7f5ff606
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthName]
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column MonthShort
+		lineageTag: 023c8eb0-d5af-444e-99c4-39db4149e542
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [MonthShort]
+		sortByColumn: MonthNo
+
+		annotation SummarizationSetBy = Automatic
+
+	column Day
+		formatString: 0
+		lineageTag: e7e2bdce-8768-4f42-94cb-ead2c8e53f19
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Day]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayOfWeekNo
+		formatString: 0
+		lineageTag: d86c38e0-e4af-4052-9038-e7b8b7f81af9
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [DayOfWeekNo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column DayName
+		lineageTag: 35dfb2ea-4787-404d-ab62-0af81ef58bf0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [DayName]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Calendar = calculated
+		mode: import
+		source =
+				
+				VAR MinYear = YEAR(MIN('fact_sales'[date]))
+				VAR MaxYear = YEAR(MAX('fact_sales'[date]))
+				RETURN
+				ADDCOLUMNS (
+				    CALENDAR(DATE(MinYear, 1, 1), DATE(MaxYear, 12, 31)),
+				    "DateKey", YEAR([Date]) * 10000 + MONTH([Date]) * 100 + DAY([Date]),
+				    "Year", YEAR([Date]),
+				    "Period", YEAR([Date]) * 100 + MONTH([Date]),
+				    "MonthNo", MONTH([Date]),
+				    "MonthName", FORMAT([Date], "MMMM", "en-US"),
+				    "MonthShort", FORMAT([Date], "MMM", "en-US"),
+				    "Day", DAY([Date]),
+				    "DayOfWeekNo", WEEKDAY([Date], 2),
+				    "DayName", FORMAT([Date], "dddd", "en-US")
+				)
+
+	annotation PBI_Id = 8c92e6df486f4d549c2b7963f84f97f0
+

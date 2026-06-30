@@ -1,0 +1,71 @@
+table 'Calculation group'
+	lineageTag: dff996c6-fa5e-488d-be19-c1cb91bc3cfe
+
+	calculationGroup
+
+		calculationItem 'Calculation item' = SELECTEDMEASURE()
+
+	measure M_Amount_PreYear = CALCULATE(SUM(fact_sales[sale_amount]),DATEADD(dim_calendar[date],-1,YEAR))
+		formatString: #,0
+		lineageTag: 84d21251-1e4b-4b9d-ad86-c86ed458592d
+
+	measure M_Count_PreYear = CALCULATE(COUNT(fact_sales[sale_amount]),DATEADD(dim_calendar[date],-1,YEAR))
+		formatString: #,0
+		lineageTag: aabd456e-a1ec-40d3-a07a-78458d88f76c
+
+	measure M_Diff_Amount =
+			
+			DIVIDE(
+			    (CALCULATE(SUM(fact_sales[sale_amount])) - [M_Amount_PreYear]),
+			    [M_Amount_PreYear]
+			)
+		formatString: #,0%;-#,0%;#,0%
+		lineageTag: 7414508d-4f4e-4b0e-8c78-1833e62f793b
+
+	measure M_Count_Total = CALCULATE(COUNT(fact_sales[sale_amount]))
+		formatString: #,0
+		lineageTag: 7efedf95-bc93-43c0-aeb6-3b4fb931f510
+
+	measure M_Diff_Count =
+			
+			DIVIDE(
+			    ([M_Count_Total] - [M_Count_PreYear]),
+			    [M_Count_PreYear]
+			)
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: 2529aeaf-cd08-4815-86c3-7d5743815ebc
+
+	measure M_Amount_Total = SUM(fact_sales[sale_amount])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 51b33ddf-0d21-487c-9a6a-083d2955d0ee
+
+	measure M_Amount_Total_M = [M_Amount_Total]/1000000
+		formatString: 0.00
+		lineageTag: 0eab01c2-4f87-4709-90b1-2a63a155fd7a
+
+	measure M_Avg_Total = DIVIDE([M_Amount_Total],[M_Count_Total],0)
+		formatString: #,0.00
+		lineageTag: f9b4443c-cc57-415a-9880-561ff9ed3d04
+
+	measure M_Avg_PreYear = DIVIDE([M_Amount_PreYear],[M_Count_PreYear],0)
+		formatString: #,0.00
+		lineageTag: 635aae22-7e72-4c0c-a357-891dc16a2aaa
+
+	column 'Calculation group column'
+		dataType: string
+		lineageTag: 9207fd9f-d7af-4d00-9692-1adc91a8f22f
+		summarizeBy: none
+		sourceColumn: Name
+		sortByColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ordinal
+		dataType: int64
+		formatString: 0
+		lineageTag: ff53a8db-50bf-4dd2-b927-95d0e8b2eac2
+		summarizeBy: sum
+		sourceColumn: Ordinal
+
+		annotation SummarizationSetBy = Automatic
+

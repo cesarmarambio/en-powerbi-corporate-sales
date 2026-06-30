@@ -1,0 +1,89 @@
+table fact_sales
+	lineageTag: 298e07c7-a00c-47b0-af04-66466e1153e4
+
+	column seller_id
+		dataType: string
+		lineageTag: bbe8cd0a-f31e-40ec-b163-f1e4716b87ee
+		summarizeBy: none
+		sourceColumn: seller_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sell_id
+		dataType: string
+		lineageTag: a7f178bf-5973-482f-b578-33d445e38013
+		summarizeBy: none
+		sourceColumn: sell_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column client_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 10d9b336-f3ac-4e4f-a720-5d8c4f09a51f
+		summarizeBy: none
+		sourceColumn: client_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column city_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ba05311-72a4-4a72-8c6c-39272f277d02
+		summarizeBy: none
+		sourceColumn: city_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sale_amount
+		dataType: int64
+		formatString: 0
+		lineageTag: eb873184-5f97-44db-86e8-529a2ec492fc
+		summarizeBy: sum
+		sourceColumn: sale_amount
+
+		annotation SummarizationSetBy = Automatic
+
+	column date
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 836aa7cd-f4d1-4edc-807f-8eb1540bbd12
+		summarizeBy: none
+		sourceColumn: date
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column product_id
+		dataType: int64
+		formatString: 0
+		lineageTag: 54d9fbcc-1b18-478d-8a00-e3c8d6266b95
+		summarizeBy: none
+		sourceColumn: product_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column sale_quantity
+		dataType: int64
+		formatString: 0
+		lineageTag: 849fb8a5-bbf6-403e-90d7-18d9b219468d
+		summarizeBy: sum
+		sourceColumn: sale_quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	partition fact_sales = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(CSV_DIR & "fact_sales.csv"), [Delimiter = ";", Columns = 8, Encoding = 1252]),
+				    #"Promoted Headers" = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    #"Changed Type" = Table.TransformColumnTypes(#"Promoted Headers",{{"client_id", Int64.Type}, {"sale_amount", Int64.Type}, {"city_id", Int64.Type}, {"product_id", Int64.Type}, {"sale_quantity", Int64.Type}, {"date", type date}})
+				in
+				    #"Changed Type"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+
