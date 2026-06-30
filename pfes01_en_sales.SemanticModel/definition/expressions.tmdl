@@ -1,6 +1,5 @@
 /// CSV Files directory
-
-/// default directory, you must change it! 
+/// default directory, you must change it!
 expression CSV_DIR = "\sales_report\" meta [IsParameterQuery=true, Type="Any", IsParameterQueryRequired=true]
 	lineageTag: 24c68801-d28e-4be2-b24c-c7c46a1751da
 
