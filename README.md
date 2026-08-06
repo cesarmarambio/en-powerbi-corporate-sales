@@ -1,8 +1,8 @@
 # Corporate Sales Performance Dashboard
 
-[![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)](#)
-[![DAX](https://img.shields.io/badge/DAX-0078D4?style=for-the-badge&logo=microsoft&logoColor=white)](#)
-[![Data Engineering](https://img.shields.io/badge/Data_Engineering-2596be?style=for-the-badge)](#)
+![Power BI](https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black)
+![DAX](https://img.shields.io/badge/DAX-0078D4?style=for-the-badge&logo=microsoft&logoColor=white)
+![Data Engineering](https://img.shields.io/badge/Data_Engineering-2596be?style=for-the-badge)
 
 > **[View the Interactive Dashboard Live on my Portfolio](https://intelidatos.cl/en/portfolio/)**
 
@@ -42,4 +42,14 @@ If you want to clone this repository and run it on your local machine:
 5. Apply changes and refresh the semantic model.
 
 ---
-*Developed by **César Marambio** | Data Engineer & BI Specialist*
+## Visual Architecture & Data Modeling
+
+### The Star Schema
+The semantic model strictly follows a Star Schema design, optimizing relationship pathways between the central sales fact table and its descriptive dimensions for efficient DAX querying.
+
+![Star Schema Model](img/en_sales_model.png)
+
+### The Final Dashboard
+The end product is a clear and interactive Corporate Sales Performance dashboard, enabling quick insights into geographic distribution, product performance, and team productivity.
+
+![Corporate Sales Dashboard](img/en_sales_main.png)
